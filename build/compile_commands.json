@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/naufal/Documents/Projects/in/build",
+  "command": "/usr/bin/g++ -I/home/naufal/Documents/Projects/in/src/../include -I/home/naufal/Documents/Projects/in/src/../json/include -I/home/naufal/Documents/Projects/in/json/include -g -o src/CMakeFiles/in.dir/main.cpp.o -c /home/naufal/Documents/Projects/in/src/main.cpp",
+  "file": "/home/naufal/Documents/Projects/in/src/main.cpp"
+},
+{
+  "directory": "/home/naufal/Documents/Projects/in/build",
+  "command": "/usr/bin/g++ -I/home/naufal/Documents/Projects/in/src/../include -I/home/naufal/Documents/Projects/in/src/../json/include -I/home/naufal/Documents/Projects/in/json/include -g -o src/CMakeFiles/in.dir/install.cpp.o -c /home/naufal/Documents/Projects/in/src/install.cpp",
+  "file": "/home/naufal/Documents/Projects/in/src/install.cpp"
+},
+{
+  "directory": "/home/naufal/Documents/Projects/in/build",
+  "command": "/usr/bin/g++ -I/home/naufal/Documents/Projects/in/src/../include -I/home/naufal/Documents/Projects/in/src/../json/include -I/home/naufal/Documents/Projects/in/json/include -g -o src/CMakeFiles/in.dir/utils.cpp.o -c /home/naufal/Documents/Projects/in/src/utils.cpp",
+  "file": "/home/naufal/Documents/Projects/in/src/utils.cpp"
+}
+]
