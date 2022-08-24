@@ -1,4 +1,4 @@
-#include <utils.h>
+#include <Utils.h>
 
 void Utils::CreateDirectory(char* pathname, int mode) {
   char* p;
@@ -82,4 +82,45 @@ int Utils::VerifyChecksum(const char* p) {
 	}
   
 	return (u == Utils::ParseOctal(p + 148, 8));
+}
+
+int Utils::Exec(std::string cmd) {
+  std::array<char, 128> buffer;
+  std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
+  
+  if (!pipe) {
+		std::cout << "popen() failed!" << std::endl;
+		return -1;
+	}
+
+  return 0;
+}
+
+int Utils::ExecLog(std::string cmd) {
+  std::array<char, 128> buffer;
+  std::string result;
+  std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
+  
+  if (!pipe) {
+    throw std::runtime_error("popen() failed!");
+  }
+
+  while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+    result += buffer.data();
+  }
+
+	std::cout << result << std::endl;
+
+  return 0;
+}
+
+int Utils::ReadAndExecute(const char* file) {
+  std::fstream stream(file);
+  std::string line;
+
+  while (getline(stream, line)) {
+    std::cout << Utils::ExecLog(line.c_str()) << std::endl;
+  }
+
+  return 0;
 }

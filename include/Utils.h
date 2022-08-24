@@ -3,7 +3,10 @@
 #include <cstdio>
 #include <cstring>
 #include <iostream>
+#include <memory>
+#include <array>
 #include <sys/stat.h>
+#include <fstream>
 
 class Utils {
   public:
@@ -21,6 +24,9 @@ class Utils {
     static int IsEndOfArchive(const char* p);
     static int ParseOctal(const char* p, size_t n);
     static int VerifyChecksum(const char* p);
+    static int Exec(std::string cmd);
+    static int ExecLog(std::string cmd);
+    static int ReadAndExecute(const char* file);
 };
 
 #endif

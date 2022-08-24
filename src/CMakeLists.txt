@@ -1,4 +1,4 @@
-add_executable(in main.cpp install.cpp utils.cpp)
+add_executable(in main.cpp App.cpp Utils.cpp)
 
 include_directories(../include)
 include_directories(../json/include)

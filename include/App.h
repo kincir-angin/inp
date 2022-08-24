@@ -9,32 +9,45 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <memory>
-#include <stdexcept>
 #include <string>
 #include <array>
-#include <utils.h>
+#include <Utils.h>
 #include <archive.h>
 #include <archive_entry.h>
 #include <libtar.h>
 #include <ncurses.h>
+#include <dirent.h>
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 #define PREINSTALL  ".tmp/preinstall.sh" 
 #define POSTINSTALL ".tmp/postinstall.sh" 
 
-class Install {
+/* App operation */
+enum OP {
+  INSTALL = 0,
+  REMOVE = 1,
+  RECREATE = 2,
+  UPDATE = 3,
+  CHANGE = 4,
+  CREATE = 5
+};
+
+class App {
   public:
-    Install(std::string filename);
-    ~Install();
+    App(int operation, std::string filename);
+    ~App();
 
     void CountTotal();
     void Extract();
     static int CopyData(struct archive *ar, struct archive *aw);
-    int ReadAndExecute(const char* file);
-    static std::string exec(const char* cmd);
+    int CreatePackage();
+    int CreateMetaData();
+    int CreateContents(int indent);
 
   private:
     std::string m_filename;
+    std::vector<std::string> m_files;
     int m_total;
 };
 
