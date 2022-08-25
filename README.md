@@ -1,10 +1,10 @@
 # InOS Package Manager (inp)
 
 In Package Manager (inp) is a simple package manager for InOS. It can create, 
-remove, install, and even recreate package. InP bundle the project binary, 
-include, and other app requirements in one tarball and Inp will copy the content
-to root directory. It will be danger sometimes but we keep the simplicity to
-our application.
+remove, install, and even recreate package. InP bundles up the project binary, 
+include(s), and other app requirements in one tarball and Inp will copy the content
+to root directory. It may be unsafe sometimes, but we manage to keep the simplicity
+of our application this way.
 
 Since InOS is based on LFS, we recommends you to compile the application from
 source or using default online repository for security purpose.
