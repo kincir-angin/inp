@@ -1,34 +1,54 @@
 #include <stdio.h>
 #include <string.h>
 #include <create-package.h>
+#include <getopt.h>
+#include <config.h>
+#define true 1
 
-void usage() {
-  printf("Usage: \n"
-         "  install  To install package\n");
+void usage(char* argv) {
+  printf("InOS Package Manager %d"
+        "Usage: %s [OPTION] [FILE OR PACKAGES] \n"
+         "  OPTIONS: \n" 
+         "    -i --install To install package\n"
+         "    -u --uninstall To remove or uninstall package\n"
+         "    -r --remove To remove or uninstall package\n"
+         "    -l --list-packages To list installed package\n"
+         "    -c --create-package To create package from directory\n",
+         argv, PACKAGE_VERSION);
 }
 
-int main(int argc, char const *argv[]) {
-  if (create_package("./contoh") == RET_OK) {
-    fprintf(stdout, "BERHASIL\n");
-    exit(0);
+int main(int argc, char **argv) {
+  int c; 
+
+  while (true) {
+    int longindex = 0;
+
+    static struct option long_options[] = {
+      { "install", required_argument, 0, 'i' },
+      { "uninstall", required_argument, 0, 'u' },
+      { "remove", required_argument, 0, 'r' },
+      { "create-package", required_argument, 0, 'c' },
+      { "list-packages", required_argument, 0, 'l' }
+    };
+
+    c = getopt_long(argc, argv, "i:u:r:c:l", long_options, &longindex);
+
+    switch (c) {
+      case 'i':
+      case 'u':
+      case 'r':
+      case 'l':
+        fprintf(stdout, "PASS\n"); // TODO
+        break;
+      case 'c':
+        create_package(optarg);
+        break;
+      case '?':
+        usage(argv[0]);
+    }
+
+    if (c == -1) break;
   }
-  // for (int i = 0; i < argc; i++) {
-  //   if (strcmp(argv[i], "create-package") == 0) {
-  //     /* Fungsi untuk Buat package */
-  //     create_package(argv[i + 1]);
-  //   } else if (strcmp(argv[i], "install") == 0) {
-  //     /* Fungsi untuk install package */
-  //   } else if (strcmp(argv[i], "uninstall") == 0) {
-  //     /* Fungsi untuk uninstall package */
 
-  //   } else if (strcmp(argv[i], "list-packages") == 0) {
-
-  //   } else if (strcmp(argv[i], "help") == 0) {
-  //     usage();
-  //   } else {
-  //     printf("In Package Manager (inp) v0.1\n");
-  //   }
-  // }
-
-  return 0;
+  exit(EXIT_SUCCESS);
 }
