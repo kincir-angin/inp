@@ -113,7 +113,7 @@ int create_package(const char* _project_name) {
   }
 
   /* Create tarball */
-  // create(PROJ_DIR);
+  create(PROJ_DIR);
 
   return RET_OK;
 }
@@ -168,12 +168,12 @@ int create_contents(int c, const char* root, const char* path) {
 static char buff[16384];
 
 static void create(const char* file_name) {
-  char* filename = (char*) malloc(512);
-  char* proj_dir = (char*) malloc(512);
+  char* filename = (char*) malloc(strlen(file_name) + 8);
+  char* proj_dir = (char*) malloc(strlen(file_name) + 2);
 
-  strcat(filename, file_name);
-  strcat(filename, ".tar");
-  strcat(proj_dir, file_name);
+  filename = strdup(file_name);
+  proj_dir = strdup(file_name);
+  strcat(filename, ".tar.gz");
   strcat(proj_dir, "/");
 
   struct archive* a;
@@ -189,6 +189,7 @@ static void create(const char* file_name) {
 
 	if (proj_dir != NULL && strcmp(proj_dir, "-") == 0)
 		proj_dir = NULL;
+
 	archive_write_open_filename(a, filename);
 
   /* Start reading disk */
@@ -222,7 +223,7 @@ static void create(const char* file_name) {
     needcr = 1;
 
     char* entry_name = (char*) archive_entry_pathname(entry);
-    char* tmp = str_replace(entry_name, "./contoh", ".");
+    char* tmp = str_replace(entry_name, file_name, ".");
     archive_entry_set_pathname(entry, tmp);
 
     r = archive_write_header(a, entry);
@@ -254,4 +255,7 @@ static void create(const char* file_name) {
   archive_read_free(disk);
   archive_write_close(a);
 	archive_write_free(a);
+
+  free(filename);
+  free(proj_dir);
 }
