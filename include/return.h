@@ -1,7 +1,7 @@
 #ifndef RETURN_H
 #define RETURN_H
 
-#define RET_ERR 1
-#define RET_OK  0
+#define RET_ERR EXIT_FAILURE
+#define RET_OK  EXIT_SUCCESS
 
 #endif
