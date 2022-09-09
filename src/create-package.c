@@ -162,6 +162,7 @@ int create_contents(int c, const char* root, const char* path) {
 
   free(package_dir);
   free(fp);
+
   return 0;
 }
 
@@ -194,12 +195,11 @@ static void create(const char* file_name) {
 
   /* Start reading disk */
   struct archive* disk = archive_read_disk_new();
-  archive_read_disk_set_standard_lookup(disk);
   r = archive_read_disk_open(disk, proj_dir);
 
   if (r != ARCHIVE_OK) {
     fprintf(stderr, "archive error: %s\n", archive_error_string(disk));
-    exit(1);
+    exit(RET_ERR);
   }
 
   for (;;) {
@@ -208,12 +208,11 @@ static void create(const char* file_name) {
     entry = archive_entry_new();
     r = archive_read_next_header2(disk, entry);
 
-    if (r == ARCHIVE_EOF)
-      break;
+    if (r == ARCHIVE_EOF) break;
 
     if (r != ARCHIVE_OK) {
       fprintf(stderr, "archive error: %s\n", archive_error_string(disk));
-      exit(1);
+      exit(RET_ERR);
     }
 
     archive_read_disk_descend(disk);
@@ -234,7 +233,7 @@ static void create(const char* file_name) {
     }
 
     if (r == ARCHIVE_FATAL)
-      exit(1);
+      exit(RET_ERR);
 
     if (r > ARCHIVE_FAILED) {
       fd = open(archive_entry_sourcepath(entry), O_RDONLY);
